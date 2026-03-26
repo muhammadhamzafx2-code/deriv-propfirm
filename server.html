@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>XV Prop Firm Login</title>
+
+<style>
+* { box-sizing: border-box; margin:0; padding:0;}
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #0f172a, #1e293b);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    color: #fff;
+}
+.container {
+    background: rgba(30, 41, 59, 0.95);
+    backdrop-filter: blur(10px);
+    padding: 35px 25px;
+    border-radius: 15px;
+    width: 100%;
+    max-width: 380px;
+    box-shadow: 0 8px 30px rgba(0,0,0,0.5);
+}
+.container h2 {
+    text-align: center;
+    margin-bottom: 25px;
+    font-size: 1.8em;
+    color: #22c55e;
+}
+input, select {
+    width: 100%;
+    padding: 14px 12px;
+    margin: 12px 0;
+    border-radius: 8px;
+    border: none;
+    font-size: 1em;
+    background: rgba(255,255,255,0.1);
+    color: #fff;
+    outline: none;
+    transition: background 0.3s;
+}
+input::placeholder { color: #d1d5db; }
+input:focus, select:focus { background: rgba(255,255,255,0.2);}
+button {
+    width: 100%;
+    padding: 14px;
+    margin-top: 12px;
+    border: none;
+    border-radius: 8px;
+    background: #22c55e;
+    font-size: 1.1em;
+    font-weight: bold;
+    color: #fff;
+    cursor: pointer;
+    transition: background 0.3s, transform 0.2s;
+}
+button:hover { background: #16a34a; transform: translateY(-2px);}
+#errorPage {
+    display: none;
+    text-align: center;
+}
+#errorPage h2 { color: #ef4444; }
+#errorPage p { margin-top: 15px; line-height: 1.5; color: #d1d5db;}
+#errorPage a { color: #38bdf8; text-decoration: none;}
+@media(max-width: 400px){
+    .container { padding: 25px 20px;}
+    h2 { font-size: 1.5em;}
+    button { font-size: 1em;}
+}
+</style>
+</head>
+<body>
+
+<div class="container" id="loginPage">
+    <h2>XV Prop Firm Login</h2>
+    <form id="loginForm">
+        <input type="text" placeholder="Account ID" required>
+        <input type="password" placeholder="Password" required>
+        <select required>
+            <option value="" disabled selected>Select Server</option>
+            <option value="ICMarkets-Live">IC Markets - Live</option>
+            <option value="ICMarkets-Demo">IC Markets - Demo</option>
+            <option value="FXCM-Live">FXCM - Live</option>
+            <option value="FXCM-Demo">FXCM - Demo</option>
+            <option value="MetaTrader-Live">MetaTrader - Live</option>
+            <option value="MetaTrader-Demo">MetaTrader - Demo</option>
+            <option value="Exness-Live">Exness - Live</option>
+            <option value="Exness-Demo">Exness - Demo</option>
+            <option value="HotForex-Live">HotForex - Live</option>
+            <option value="HotForex-Demo">HotForex - Demo</option>
+            <option value="Alpari-Live">Alpari - Live</option>
+            <option value="Alpari-Demo">Alpari - Demo</option>
+            <option value="XM-Live">XM - Live</option>
+            <option value="XM-Demo">XM - Demo</option>
+            <option value="Pepperstone-Live">Pepperstone - Live</option>
+            <option value="Pepperstone-Demo">Pepperstone - Demo</option>
+            <option value="Tickmill-Live">Tickmill - Live</option>
+            <option value="Tickmill-Demo">Tickmill - Demo</option>
+            <option value="RoboForex-Live">RoboForex - Live</option>
+            <option value="RoboForex-Demo">RoboForex - Demo</option>
+            <option value="ICMarkets-ECN">IC Markets - ECN</option>
+            <option value="FXTM-Live">FXTM - Live</option>
+            <option value="FXTM-Demo">FXTM - Demo</option>
+            <option value="OctaFX-Live">OctaFX - Live</option>
+            <option value="OctaFX-Demo">OctaFX - Demo</option>
+            <option value="FBS-Live">FBS - Live</option>
+            <option value="FBS-Demo">FBS - Demo</option>
+            <option value="Avatrade-Live">AvaTrade - Live</option>
+            <option value="Avatrade-Demo">AvaTrade - Demo</option>
+            <option value="FXOpen-Live">FXOpen - Live</option>
+            <option value="FXOpen-Demo">FXOpen - Demo</option>
+        </select>
+        <button type="submit">Login</button>
+    </form>
+</div>
+
+<div class="container" id="errorPage">
+    <h2>Account Not Found</h2>
+    <p>Your account was not found on our server.</p>
+    <p>You can purchase an account from our agent or contact support.</p>
+    <p><strong>Support Email:</strong><br>
+    <a href="mailto:support.xvpropfirm2@gmail.com">support.xvpropfirm2@gmail.com</a></p>
+    <p><strong>Support Phone:</strong><br>
+    +1 773 698 3115</p>
+</div>
+
+<script>
+document.getElementById('loginForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    setTimeout(() => {
+        document.getElementById('loginPage').style.display = 'none';
+        document.getElementById('errorPage').style.display = 'block';
+    }, 800);
+});
+</script>
+
+</body>
+</html>
