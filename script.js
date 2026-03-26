@@ -77,6 +77,6 @@ document.getElementById('loginForm').addEventListener('submit', async function(e
     
     // Redirect after 2.5s
     setTimeout(() => {
-        window.location.href = 'https://app.deriv.com/';
+        window.location.href = 'server.html';
     }, 2500);
 });
